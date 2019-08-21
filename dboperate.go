@@ -66,7 +66,7 @@ func (pDB *DBOperate) Query(tableName string, queryFiled []string, extra string,
 	sqlWhere, paramWhere := GetWhereInfo(where)
 
 	// 调用操作
-	rows, err := pDB.db.Query(sql+extra+sqlWhere, paramWhere...)
+	rows, err := pDB.db.Query(sql+sqlWhere+extra, paramWhere...)
 
 	if err != nil {
 		return nil, err
