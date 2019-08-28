@@ -19,7 +19,7 @@ func ProtoToMap(pb proto.Message) map[string]interface{} {
 
 	for i := 0; i < elemLen; i++ {
 		// 字段为空不做处理
-		if elem.Field(i).IsNil() {
+		if strings.HasPrefix(strName, "XXX_") || elem.Field(i).IsNil() {
 			continue
 		}
 
@@ -60,6 +60,11 @@ func DataToProto(data []interface{}, inMap map[string]int, pb proto.Message) {
 		strName = elem.Type().Field(i).Name
 		value = elem.Field(i).Addr().Interface()
 		strFieldType = elem.Field(i).Type().String()
+
+		// 不是XXX_开头的字段或者字段为空不做处理
+		if strings.HasPrefix(strName, "XXX_"){
+			continue
+		}
 
 		if index, ok := inMap[strName]; ok {
 			switch strFieldType {

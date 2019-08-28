@@ -27,6 +27,10 @@ func (pDB *DBOperate) ConnDB() error {
 	return err
 }
 
+func (pDB *DBOperate) DBPing() error {
+	return pDB.db.Ping()
+}
+
 func (pDB *DBOperate) SetAutoCommit() error {
 	_, err := pDB.db.Exec("set autocommit=1")
 	return err
